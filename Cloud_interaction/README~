@@ -1,0 +1,18 @@
+model_backup:按照月-天-小时的格式备份模型
+
+saved_networks:存放最新的模型，每次实验开始都将从导入这个模型
+
+observe.py:机器人与环境交互，根据当前的模型计算出动作信息，采取动作，得到各个时刻的reward信息。
+
+update_model.py:在observe.py运行前就运行此脚本，一旦运行此脚本，就能与云端服务器的相应端口连接上，并得到最新的模型，模型保存在saved_networks
+
+observe_camera_local.py
+python observe_camera_local.py 即可开启机器人与环境的交互进程，一边交互一边采集数据并传入数据库
+
+train_dqn_using_D.py:云端服务器运行此脚本，不停的利用数据库的数据进行训练，一旦训练好模型就通知机器人与plz的台式机来获取新模型，若连接超时则pass，继续训练
+
+运行：
+一个终端：roscore
+一个终端：update_model.py
+一个终端：USB——camera
+一个终端：observe.py

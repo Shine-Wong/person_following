@@ -1,0 +1,36 @@
+**************原始readme文件内容******************
+model_backup:按照月-天-小时的格式备份模型
+
+saved_networks:存放最新的模型，每次实验开始都将从导入这个模型
+
+observe.py:机器人与环境交互，根据当前的模型计算出动作信息，采取动作，得到各个时刻的reward信息。
+
+update_model.py:在observe.py运行前就运行此脚本，一旦运行此脚本，就能与云端服务器的相应端口连接上，并得到最新的模型，模型保存在saved_networks
+
+observe_camera_local.py
+python observe_camera_local.py 即可开启机器人与环境的交互进程，一边交互一边采集数据并传入数据库
+
+train_dqn_using_D.py:云端服务器运行此脚本，不停的利用数据库的数据进行训练，一旦训练好模型就通知机器人与plz的台式机来获取新模型，若连接超时则pass，继续训练
+
+运行：
+一个终端：roscore
+一个终端：update_model.py
+一个终端：USB——camera
+一个终端：observe.py
+*****************至此截止*********************
+
+#################文件描述#####################
+1|observe_and_upload_by_shuai.py
+该文件为我直接在现在的只在本地做交互的observe.py程序基础上加上了MySQL传输部分程序.程序能够正常传输信息到数据库.
+
+2|observe_and_upload_to_mysql.py
+该文件为在师姐原始的边交互边上传数据的程序上进行修改的,但是不太清楚该程序前面在做什么???运行情况也是只出来一幅图像,鼠标点4个点后便无反应.
+
+3|observe_camera_cloudmysql.py 和 observe_camera_local.py
+师姐原始未经改动的边交互边上传文件的程序.
+
+4|train_dqn_using_D.py
+运行过程中提示数据样本太大,,
+
+5|update_model.py
+机器人端正常运行,但未下载到模型文件
