@@ -1,0 +1,27 @@
+####注意修改文件路径及配置文件
+###按文件执行顺序对文件进行说明
+##test_Tools文件夹中为简单场景数据集重命名及排序程序(备用),以及测试掩膜效果的程序
+
+需要建立的文件夹:
+background_pictures:存放互联网下载的复杂背景图片
+useful_frames:简单场景下搜集的目标人图片
+useful_background_with_index_sorted:经过程序排序好的背景图片
+useful_frames_with_index_sorted:经过程序排序好的简单场景图片
+matlab_frames_with_new_background:简单场景目标人合成到复杂场景图片
+
+##sort_frames_and_backgrounds.py
+该文件将useful_frames和background_pictures中的图片以索引命名并存放在useful_frames_with_index_sorted和useful_background_with_index_sorted中,其中useful_frames中的图片应是连续拍摄的,按索引命名后顺序不应打乱
+
+##change_background_of_all_frames.m
+该文件用以提取useful_frames_with_index_sorted中的特定人,并将其与useful_background_with_index_sorted中的图片进行合成,合成后的图片存放于matlab_frames_with_new_background中
+#put_in_new_background.m
+change_background_of_all_frames.m依赖于put_in_new_background.m,可通过修改文件中的c = [200,200,200]与thresh = 125来改变提取的特定人的效果
+
+##change_luminance_of_all_images.m
+该文件用于改变合成图片的光照强度并保存在matlab_frames_with_new_background中
+
+##test_person_portion_using_upanddown.py
+该文件用于给useful_frames_with_index_sorted中的图片设置标签,生成cnn_frame_num.txt和list_a_t.txt;掩膜的效果通过改变conf.py中的lower_shang和upper_shang实现
+
+##save_all_frames_and_a_t_tomysql.py
+该文件通过list_a_t.txt给所有合成的图片生成标签
